@@ -4,35 +4,43 @@ use Moose::Role;
 
 =head1 NAME
 
-MooseX::DBIC::AddColumn::Meta::Attribute - Metaclass attribute for MooseX::DBIC::AddColumn
+MooseX::DBIC::AddColumn::Meta::Attribute - Attribute metaclass trait for MooseX::DBIC::AddColumn
 
 =cut
 
+use MooseX::DBIC::AddColumn::Meta::Method::Accessor;
+
 has _moosex_dbic_addcolumn_column_info => (
-  isa => 'Maybe[HashRef]',
-  is  => 'rw',
+  isa       => 'Maybe[HashRef]',
+  is        => 'rw',
+  predicate => 'has__moosex_dbic_addcolumn_column_info',
 );
+
+around accessor_metaclass => sub {
+  return 'MooseX::DBIC::AddColumn::Meta::Method::Accessor';
+};
 
 around new => sub {
   my ($orig, $class, $name, %options) = @_;
 
   my $column_info = delete $options{add_column};
 
+  if ($column_info) {
+    my $target_pkg = $options{definition_context}->{package};
+    
+    $target_pkg->add_column($name => $column_info);
+
+    # removing the accessor method that CAG installed (otherwise Moose complains)
+    $target_pkg->meta->remove_method($name);
+  }
+
   my $self = $class->$orig($name, %options);
 
-  $self->_moosex_dbic_addcolumn_column_info($column_info);
+  if ($column_info) {
+    $self->_moosex_dbic_addcolumn_column_info($column_info);
+  }
 
   return $self;
-};
-
-after install_accessors => sub {
-  my ($self) = @_;
-
-  my $column_info = $self->_moosex_dbic_addcolumn_column_info;
-  if ($column_info) {
-    #FIXME instead of letting CAG overwrite the Class::MOP/Moose accessor use a custom accessor metaclass that delegates to DBIC's get_column/set_column
-    $self->associated_class->name->add_column($self->name => $column_info);
-  }
 };
 
 1;

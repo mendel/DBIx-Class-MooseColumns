@@ -32,6 +32,8 @@ has guess => (
   default => sub { int(rand 100)+1 },
 );
 
+__PACKAGE__->set_primary_key('artist_id');
+
 __PACKAGE__->meta->make_immutable;
 
 1;

@@ -11,7 +11,7 @@ use lib dir($FindBin::Bin)->subdir('lib')->stringify;
 
 use TestSchema;
 
-my $schema = TestSchema->connect("dbi:SQLite:t/var/TestSchema.db");
+my $schema = TestSchema->connect("dbi:SQLite:dbname=t/var/TestSchema.db");
 
 {
   throws_ok {
@@ -36,6 +36,52 @@ my $schema = TestSchema->connect("dbi:SQLite:t/var/TestSchema.db");
       })
     );
   } "column_info of 'name' contains ('is_nullable' => 0)";
+}
+
+{
+  my $artist1 = $schema->resultset('Artist')->find({ artist_id => 1 });
+
+  lives_and {
+    cmp_deeply(
+      $artist1->name,
+      'foo'
+    );
+  } "value returned by 'name' accessor is 'foo'";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->name('bar'),
+      'bar'
+    );
+  } "calling the 'name' accessor to set 'name' to 'bar' returns 'bar'";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->get_column('name'),
+      'bar'
+    );
+  } "value returned by get_column('name') is 'bar'";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->name('bar'),
+      'bar'
+    );
+  } "value returned by 'name' accessor is 'bar'";
+
+  lives_ok {
+    $artist1->set_column(name => 'quux');
+  } "calling set_column('name', 'quux') does not die";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->name,
+      'quux'
+    );
+  } "value returned by 'name' accessor is 'quux'";
+
+  #FIXME other methods (predicate, clearer, ...)
+  #FIXME test Moose triggers
 }
 
 done_testing;
