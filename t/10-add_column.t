@@ -84,4 +84,52 @@ my $schema = TestSchema->connect("dbi:SQLite:dbname=t/var/TestSchema.db");
   #FIXME test Moose triggers
 }
 
+{
+  my $artist1 = $schema->resultset('Artist')->find({ artist_id => 1 });
+
+  lives_and {
+    cmp_deeply(
+      $artist1->title,
+      'Dr'
+    );
+  } "value returned by 'title' method is 'Dr'";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->title('Prof'),
+      'Prof'
+    );
+  } "calling the 'title' method to set 'title' to 'Prof' returns 'Prof'";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->get_column('title'),
+      'Prof'
+    );
+  } "value returned by get_column('title') is 'Prof'";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->title('Prof'),
+      'Prof'
+    );
+  } "value returned by 'title' method is 'Prof'";
+
+  throws_ok {
+    $artist1->title('Mr')
+  } qr/Invalid title/,
+    "calling set_column('title', 'Mr') dies";
+
+  lives_ok {
+    $artist1->set_column(title => undef);
+  } "calling set_column('title', undef) does not die";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->title,
+      undef
+    );
+  } "value returned by 'title' method is undef";
+}
+
 done_testing;

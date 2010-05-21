@@ -24,6 +24,7 @@ around new => sub {
   my ($orig, $class, $name, %options) = @_;
 
   my $column_info = delete $options{add_column};
+  $column_info->{accessor} = $options{accessor} if $options{accessor};
 
   if ($column_info) {
     my $target_pkg = $options{definition_context}->{package};
@@ -31,7 +32,7 @@ around new => sub {
     $target_pkg->add_column($name => $column_info);
 
     # removing the accessor method that CAG installed (otherwise Moose complains)
-    $target_pkg->meta->remove_method($name);
+    $target_pkg->meta->remove_method($column_info->{accessor} || $name);
   }
 
   my $self = $class->$orig($name, %options);

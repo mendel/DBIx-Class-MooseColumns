@@ -26,11 +26,34 @@ has name => (
   },
 );
 
+has title => (
+  isa => 'Str',
+  is  => 'rw',
+  accessor => '_title',
+  add_column => {
+  },
+);
+
 has guess => (
   isa => 'Int',
   is  => 'ro',
   default => sub { int(rand 100)+1 },
 );
+
+# silly example (better to do this with a trigger) but i couldn't invent
+# anything better :-)
+sub title
+{
+  my ($self, $value) = (shift, @_);
+
+  if (@_ > 0) {
+    die "Invalid title" if defined $value && $value ne 'Dr' && $value ne 'Prof';
+    return $self->_title($value);
+  }
+  else {
+    return $self->_title;
+  }
+}
 
 __PACKAGE__->set_primary_key('artist_id');
 
