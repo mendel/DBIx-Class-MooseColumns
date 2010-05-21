@@ -9,19 +9,19 @@ use FindBin;
 use Path::Class;
 use lib dir($FindBin::Bin)->subdir('lib')->stringify;
 
-use TestSchema;
+use Test::DBIx::Class;
 
-my $schema = TestSchema->connect("dbi:SQLite:dbname=t/var/TestSchema.db");
+fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
 
 {
   throws_ok {
-    $schema->resultset('Artist')->result_source->column_info('guess');
+    Schema->resultset('Artist')->result_source->column_info('guess');
   } qr/No such column ['"`]?guess['"`]?/,
     "the 'guess' attribute has no column_info";
 
   lives_and {
     cmp_deeply(
-      $schema->resultset('Artist')->result_source->column_info('artist_id'),
+      Schema->resultset('Artist')->result_source->column_info('artist_id'),
       superhashof({
         is_auto_increment => 1,
       })
@@ -30,7 +30,7 @@ my $schema = TestSchema->connect("dbi:SQLite:dbname=t/var/TestSchema.db");
 
   lives_and {
     cmp_deeply(
-      $schema->resultset('Artist')->result_source->column_info('name'),
+      Schema->resultset('Artist')->result_source->column_info('name'),
       superhashof({
         is_nullable => 0,
       })
@@ -39,7 +39,7 @@ my $schema = TestSchema->connect("dbi:SQLite:dbname=t/var/TestSchema.db");
 }
 
 {
-  my $artist1 = $schema->resultset('Artist')->find({ artist_id => 1 });
+  my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
 
   lives_and {
     cmp_deeply(
@@ -85,7 +85,7 @@ my $schema = TestSchema->connect("dbi:SQLite:dbname=t/var/TestSchema.db");
 }
 
 {
-  my $artist1 = $schema->resultset('Artist')->find({ artist_id => 1 });
+  my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
 
   lives_and {
     cmp_deeply(
