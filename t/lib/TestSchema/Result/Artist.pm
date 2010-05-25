@@ -11,6 +11,7 @@ extends 'DBIx::Class::Core';
 
 __PACKAGE__->table('artist');
 
+# used for testing if ->add_column() works (also PK so used to find the row)
 has artist_id => (
   isa => 'Int',
   is  => 'rw',
@@ -19,6 +20,7 @@ has artist_id => (
   },
 );
 
+# used for testing if ->add_column() works and for benchmarking (Moose accessor)
 has name => (
   isa => 'Str',
   is  => 'rw',
@@ -27,6 +29,7 @@ has name => (
   },
 );
 
+# used to test custom accessor
 has title => (
   isa => 'Str',
   is  => 'rw',
@@ -34,6 +37,14 @@ has title => (
   add_column => {
   },
 );
+
+# used for benchmarking (CAG accessor)
+has address => (
+  isa => 'Str',
+  is  => 'rw',
+);
+
+__PACKAGE__->add_column( address => {} );
 
 has guess => (
   isa => 'Int',

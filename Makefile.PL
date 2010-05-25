@@ -32,6 +32,8 @@ author_requires 'Test::Pod'           => '1.22';
 author_requires 'Test::Pod::Coverage' => '1.08';
 author_requires 'Pod::Coverage'       => '0.18';
 author_requires 'Test::Perl::Critic'  => '1.01';
+author_requires 'Test::Benchmark'     => '0.004';
+author_requires 'String::Random'      => '0.22';
 
 extra_tests;
 
