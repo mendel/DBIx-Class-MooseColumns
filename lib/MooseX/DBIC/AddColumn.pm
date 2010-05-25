@@ -88,6 +88,10 @@ This is ALPHA SOFTWARE. Use at your own risk. Features may change.
 This module allows you to put the arguments to
 L<DBIx::Class::ResultSource/add_column> right into your attribute definitions
 and will automatically call it when it finds an C<add_column> attribute option.
+It also replaces the L<DBIx::Class>-generated accessor methods (these are
+L<Class::Accessor::Grouped>-generated accessor methods under the hood) with the
+L<Moose>-generated accessor methods so that you can use more of the wonderful
+powers of L<Moose> (eg. type constraints, triggers, ...).
 
 =head1 SEE ALSO
 
