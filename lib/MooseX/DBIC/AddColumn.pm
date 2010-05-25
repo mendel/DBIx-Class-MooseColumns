@@ -83,6 +83,10 @@ our $VERSION = '0.01';
 
 This is ALPHA SOFTWARE. Use at your own risk. Features may change.
 
+Needless to say I'm not going to steal the namespace from the upcoming
+L<MooseX::DBIC> module - I'm happy to rename this module to anything that fits
+(just it happened that this was the first module name that came to my mind;-).
+
 =head1 DESCRIPTION
 
 This module allows you to put the arguments to
