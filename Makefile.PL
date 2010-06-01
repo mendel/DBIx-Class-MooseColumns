@@ -1,7 +1,5 @@
 #!/usr/bin/env perl
 
-#FIXME make the test suite auto-create the SQLite db (currently tests fail on a dist b/c of that)
-
 use strict;
 use warnings;
 
