@@ -1,6 +1,10 @@
 Revision history for MooseX-DBIC-AddColumn
 
+0.03    2010-06-01 16:51:00+0200
+        Fixed synopsis.
+
 0.02    2010-06-01 13:21:00+0200
         Removed non-ASCII chars from POD.
+
 0.01    2010-05-14 00:10:00+0100
         First version. We will see where it goes.

@@ -34,18 +34,18 @@ Version 0.01
 
 =cut
 
-our $VERSION = '0.02';
+our $VERSION = '0.03';
 
 
 =head1 SYNOPSIS
 
-  package MyApp::Schema
+  package MyApp::Schema::Result::Artist;
 
   use Moose;
-  use MooseX::NonMoose;
+  use MooseX::DBIC::AddColumn;
   use namespace::autoclean;
 
-  extends 'DBIx::Class';
+  extends 'DBIx::Class::Core';
 
   has id => (
     isa => 'Int',
@@ -75,7 +75,7 @@ our $VERSION = '0.02';
     is  => 'rw',
   );
 
-  __PACKAGE__->meta->make_immutable;
+  __PACKAGE__->meta->make_immutable(inline_constructor => 0);
 
   1;
 
