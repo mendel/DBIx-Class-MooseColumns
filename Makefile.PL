@@ -9,7 +9,6 @@ use Module::Install::AuthorRequires 0.02;
 use Module::Install::ReadmeFromPod 0.06;
 use Module::Install::Repository 0.06;
 use Module::Install::ExtraTests 0.006;
-use Module::Install::Share 0.91;
 
 name 'MooseX-DBIC-AddColumn';
 all_from 'lib/MooseX/DBIC/AddColumn.pm';
