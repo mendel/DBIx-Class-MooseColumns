@@ -16,6 +16,7 @@ readme_from 'lib/MooseX/DBIC/AddColumn.pm' => 'clean';
 auto_set_repository;
 
 requires 'Moose'                      => '0.92';
+requires 'namespace::autoclean'       => '0.09';
 
 test_requires 'Test::Most'            => '0.21';
 test_requires 'Test::More'            => '0.92';
