@@ -1,10 +1,10 @@
-package MooseX::DBIC::AddColumn;
+package DBIx::Class::MooseColumns;
 
 use Moose ();
 use Moose::Exporter;
 use Moose::Util::MetaRole;
 
-use MooseX::DBIC::AddColumn::Meta::Attribute;
+use DBIx::Class::MooseColumns::Meta::Attribute;
 
 Moose::Exporter->setup_import_methods( also => 'Moose' );
 
@@ -16,7 +16,7 @@ sub init_meta {
   Moose::Util::MetaRole::apply_metaroles(
     for             => $args{for_class},
     class_metaroles => {
-      attribute => ['MooseX::DBIC::AddColumn::Meta::Attribute'],
+      attribute => ['DBIx::Class::MooseColumns::Meta::Attribute'],
     },
   );
 
@@ -26,15 +26,15 @@ sub init_meta {
 
 =head1 NAME
 
-MooseX::DBIC::AddColumn - Lets you write DBIC add_column() definitions as attribute options
+DBIx::Class::MooseColumns - Lets you write DBIC add_column() definitions as attribute options
 
 =head1 VERSION
 
-Version 0.01
+Version 0.06
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.06';
 
 
 =head1 SYNOPSIS
@@ -42,7 +42,7 @@ our $VERSION = '0.04';
   package MyApp::Schema::Result::Artist;
 
   use Moose;
-  use MooseX::DBIC::AddColumn;
+  use DBIx::Class::MooseColumns;
   use namespace::autoclean;
 
   extends 'DBIx::Class::Core';
@@ -83,10 +83,6 @@ our $VERSION = '0.04';
 
 This is ALPHA SOFTWARE. Use at your own risk. Features may change.
 
-Needless to say I'm not going to steal the namespace from the upcoming
-L<MooseX::DBIC> module - I'm happy to rename this module to anything that fits
-(just it happened that this was the first module name that came to my mind;-).
-
 =head1 DESCRIPTION
 
 This module allows you to put the arguments to
@@ -107,9 +103,9 @@ Norbert Buchmuller, C<< <norbi at nix.hu> >>
 
 =head1 BUGS
 
-Please report any bugs or feature requests to C<bug-moosex-dbic-addcolumn at
+Please report any bugs or feature requests to C<bug-dbix-class-moosecolumns at
 rt.cpan.org>, or through the web interface at
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=MooseX-DBIC-AddColumn>.  I
+L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=DBIx-Class-MooseColumns>.  I
 will be notified, and then you'll automatically be notified of progress on your
 bug as I make changes.
 
@@ -117,7 +113,7 @@ bug as I make changes.
 
 You can find documentation for this module with the perldoc command.
 
-    perldoc MooseX::DBIC::AddColumn
+    perldoc DBIx::Class::MooseColumns
 
 You can also look for information at:
 
@@ -125,19 +121,19 @@ You can also look for information at:
 
 =item * RT: CPAN's request tracker
 
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=MooseX-DBIC-AddColumn>
+L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=DBIx-Class-MooseColumns>
 
 =item * AnnoCPAN: Annotated CPAN documentation
 
-L<http://annocpan.org/dist/MooseX-DBIC-AddColumn>
+L<http://annocpan.org/dist/DBIx-Class-MooseColumns>
 
 =item * CPAN Ratings
 
-L<http://cpanratings.perl.org/d/MooseX-DBIC-AddColumn>
+L<http://cpanratings.perl.org/d/DBIx-Class-MooseColumns>
 
 =item * Search CPAN
 
-L<http://search.cpan.org/dist/MooseX-DBIC-AddColumn/>
+L<http://search.cpan.org/dist/DBIx-Class-MooseColumns/>
 
 =back
 
@@ -150,4 +146,4 @@ under the same terms as Perl itself.
 
 =cut
 
-1; # End of MooseX::DBIC::AddColumn
+1; # End of DBIx::Class::MooseColumns

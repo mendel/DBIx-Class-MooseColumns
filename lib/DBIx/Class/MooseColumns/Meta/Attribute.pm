@@ -1,23 +1,23 @@
-package MooseX::DBIC::AddColumn::Meta::Attribute;
+package DBIx::Class::MooseColumns::Meta::Attribute;
 
 use Moose::Role;
 
 =head1 NAME
 
-MooseX::DBIC::AddColumn::Meta::Attribute - Attribute metaclass trait for MooseX::DBIC::AddColumn
+DBIx::Class::MooseColumns::Meta::Attribute - Attribute metaclass trait for DBIx::Class::MooseColumns
 
 =cut
 
-use MooseX::DBIC::AddColumn::Meta::Method::Accessor;
+use DBIx::Class::MooseColumns::Meta::Method::Accessor;
 
-has _moosex_dbic_addcolumn_column_info => (
+has _dbix_class_moosecolumns_column_info => (
   isa       => 'Maybe[HashRef]',
   is        => 'rw',
-  predicate => 'has__moosex_dbic_addcolumn_column_info',
+  predicate => 'has__dbix_class_moosecolumns_column_info',
 );
 
 around accessor_metaclass => sub {
-  return 'MooseX::DBIC::AddColumn::Meta::Method::Accessor';
+  return 'DBIx::Class::MooseColumns::Meta::Method::Accessor';
 };
 
 around new => sub {
@@ -38,7 +38,7 @@ around new => sub {
   my $self = $class->$orig($name, %options);
 
   if ($column_info) {
-    $self->_moosex_dbic_addcolumn_column_info($column_info);
+    $self->_dbix_class_moosecolumns_column_info($column_info);
   }
 
   return $self;

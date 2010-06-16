@@ -5,7 +5,7 @@ use Moose;
 #use MooseX::NonMoose;
 use namespace::autoclean;
 
-use MooseX::DBIC::AddColumn;
+use DBIx::Class::MooseColumns;
 
 extends 'DBIx::Class::Core';
 

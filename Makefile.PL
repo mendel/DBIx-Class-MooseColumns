@@ -10,9 +10,9 @@ use Module::Install::ReadmeFromPod 0.06;
 use Module::Install::Repository 0.06;
 use Module::Install::ExtraTests 0.006;
 
-name 'MooseX-DBIC-AddColumn';
-all_from 'lib/MooseX/DBIC/AddColumn.pm';
-readme_from 'lib/MooseX/DBIC/AddColumn.pm' => 'clean';
+name          'DBIx-Class-MooseColumns';
+all_from      'lib/DBIx/Class/MooseColumns.pm';
+readme_from   'lib/DBIx/Class/MooseColumns.pm' => 'clean';
 auto_set_repository;
 
 requires 'Moose'                      => '0.92';

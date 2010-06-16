@@ -1,11 +1,11 @@
-package MooseX::DBIC::AddColumn::Meta::Method::Accessor;
+package DBIx::Class::MooseColumns::Meta::Method::Accessor;
 
 use Moose;
 use namespace::autoclean;
 
 =head1 NAME
 
-MooseX::DBIC::AddColumn::Meta::Method::Accessor - Accessor metaclass for MooseX::DBIC::AddColumn
+DBIx::Class::MooseColumns::Meta::Method::Accessor - Accessor metaclass for DBIx::Class::MooseColumns
 
 =cut
 
@@ -16,7 +16,7 @@ around _inline_has => sub {
   my ($orig, $self, $instance) = (shift, shift, @_);
 
   my $attr = $self->associated_attribute;
-  if ($attr->has__moosex_dbic_addcolumn_column_info) {
+  if ($attr->has__dbix_class_moosecolumns_column_info) {
     my ($slot_name) = $attr->slots;
 
     return sprintf q[%s->has_column_loaded("%s")], $instance, quotemeta($slot_name);
@@ -30,7 +30,7 @@ around _inline_get => sub {
   my ($orig, $self, $instance) = (shift, shift, @_);
 
   my $attr = $self->associated_attribute;
-  if ($attr->has__moosex_dbic_addcolumn_column_info) {
+  if ($attr->has__dbix_class_moosecolumns_column_info) {
     my ($slot_name) = $attr->slots;
 
     return sprintf q[%s->get_column("%s")], $instance, quotemeta($slot_name);
@@ -44,7 +44,7 @@ around _inline_store => sub {
   my ($orig, $self, $instance, $value) = (shift, shift, @_);
 
   my $attr = $self->associated_attribute;
-  if ($attr->has__moosex_dbic_addcolumn_column_info) {
+  if ($attr->has__dbix_class_moosecolumns_column_info) {
     my ($slot_name) = $attr->slots;
 
     return sprintf q[%s->set_column("%s", "%s")], $instance, quotemeta($slot_name), $value;
@@ -64,7 +64,7 @@ around _inline_get_old_value_for_trigger => sub {
   my ($orig, $self, $instance) = (shift, shift, @_);
 
   my $attr = $self->associated_attribute;
-  if ($attr->has__moosex_dbic_addcolumn_column_info) {
+  if ($attr->has__dbix_class_moosecolumns_column_info) {
     return '' unless $attr->has_trigger;
 
     return
