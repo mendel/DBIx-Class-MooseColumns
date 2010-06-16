@@ -1,5 +1,8 @@
 Revision history for MooseX-DBIC-AddColumn
 
+0.05    2010-06-16 14:40:00+0200
+        Deprecation in favour of DBIx-Class-MooseColumns.
+
 0.04    2010-06-07 13:09:00+0200
         Fixed a silly Makefile.PL bug (M:I::Share was missing).
 

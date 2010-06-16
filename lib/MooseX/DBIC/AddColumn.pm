@@ -1,40 +1,30 @@
 package MooseX::DBIC::AddColumn;
 
-use Moose ();
-use Moose::Exporter;
-use Moose::Util::MetaRole;
+warn "The MooseX::DBIC::AddColumn module is being deprecated in favour of "
+   . "DBIx::Class::MooseColumns. Please don't use it.";
 
-use MooseX::DBIC::AddColumn::Meta::Attribute;
+use DBIx::Class::MooseColumns ();
 
-Moose::Exporter->setup_import_methods( also => 'Moose' );
-
-sub init_meta {
-  my ($class, %args) = (shift, @_);
-
-  Moose->init_meta(%args);
-
-  Moose::Util::MetaRole::apply_metaroles(
-    for             => $args{for_class},
-    class_metaroles => {
-      attribute => ['MooseX::DBIC::AddColumn::Meta::Attribute'],
-    },
-  );
-
-  return $args{for_class}->meta;
+sub import
+{
+  my $class = shift;
+  unshift @_, 'DBIx::Class::MooseColumns';
+  goto \&DBIx::Class::MooseColumns::import;
 }
-
 
 =head1 NAME
 
-MooseX::DBIC::AddColumn - Lets you write DBIC add_column() definitions as attribute options
+MooseX::DBIC::AddColumn - Lets you write DBIC add_column() definitions as attribute options (DEPRECATED)
+
+THIS MODULE IS BEING DEPRECATED IN FAVOUR OF L<DBIx::Class::MooseColumns>.
 
 =head1 VERSION
 
-Version 0.01
+Version 0.05
 
 =cut
 
-our $VERSION = '0.04';
+our $VERSION = '0.05';
 
 
 =head1 SYNOPSIS
@@ -83,9 +73,8 @@ our $VERSION = '0.04';
 
 This is ALPHA SOFTWARE. Use at your own risk. Features may change.
 
-Needless to say I'm not going to steal the namespace from the upcoming
-L<MooseX::DBIC> module - I'm happy to rename this module to anything that fits
-(just it happened that this was the first module name that came to my mind;-).
+This module is being deprecated in favour of L<DBIx::Class::MooseColumns>.
+Please don't use it.
 
 =head1 DESCRIPTION
 
