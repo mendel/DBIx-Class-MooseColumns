@@ -15,6 +15,11 @@ has has_dbix_class_moosecolumns_column_info => (
   is        => 'rw',
 );
 
+has is_dbix_class_moosecolumns_inflated_column => (
+  isa       => 'Bool',
+  is        => 'rw',
+);
+
 around accessor_metaclass => sub {
   return 'DBIx::Class::MooseColumns::Meta::Method::Accessor';
 };
@@ -25,6 +30,8 @@ around new => sub {
   my $column_info = delete $options{add_column};
   $column_info->{accessor} = $options{accessor} if $options{accessor};
 
+  my $is_inflated_column;
+
   if ($column_info) {
     my $target_pkg = $options{definition_context}->{package};
     
@@ -32,6 +39,10 @@ around new => sub {
 
     # removing the accessor method that CAG installed (otherwise Moose complains)
     $target_pkg->meta->remove_method($column_info->{accessor} || $name);
+
+    if (exists $target_pkg->column_info($name)->{_inflate_info}) {
+      $is_inflated_column = 1;
+    }
   }
 
   my $self = $class->$orig($name, %options);
@@ -39,6 +50,9 @@ around new => sub {
   if ($column_info) {
     $self->has_dbix_class_moosecolumns_column_info(1);
   }
+
+  #TODO respect the API - check for $target_pkg->inflate_column() calls instead of peeking into the guts of the object
+  $self->is_dbix_class_moosecolumns_inflated_column($is_inflated_column);
 
   return $self;
 };

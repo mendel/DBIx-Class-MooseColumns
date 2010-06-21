@@ -33,7 +33,10 @@ around _inline_get => sub {
   if ($attr->has_dbix_class_moosecolumns_column_info) {
     my ($slot_name) = $attr->slots;
 
-    return sprintf q[%s->get_column("%s")], $instance, quotemeta($slot_name);
+    return sprintf q[%s->%s("%s")], $instance,
+      ($attr->is_dbix_class_moosecolumns_inflated_column
+        ? 'get_inflated_column' : 'get_column'),
+      quotemeta($slot_name);
   }
   else {
     return $self->$orig(@_);
@@ -47,7 +50,10 @@ around _inline_store => sub {
   if ($attr->has_dbix_class_moosecolumns_column_info) {
     my ($slot_name) = $attr->slots;
 
-    return sprintf q[%s->set_column("%s", "%s")], $instance, quotemeta($slot_name), $value;
+    return sprintf q[%s->%s("%s", "%s")], $instance,
+      ($attr->is_dbix_class_moosecolumns_inflated_column
+        ? 'set_inflated_column' : 'set_column'),
+      quotemeta($slot_name), $value;
   }
   else {
     return $self->$orig(@_);

@@ -9,6 +9,8 @@ use DBIx::Class::MooseColumns;
 
 extends 'DBIx::Class::Core';
 
+__PACKAGE__->load_components(qw/InflateColumn::DateTime/);
+
 __PACKAGE__->table('artist');
 
 # used for testing if ->add_column() works (also PK so used to find the row)
@@ -35,6 +37,15 @@ has title => (
   is  => 'rw',
   accessor => '_title',
   add_column => {
+  },
+);
+
+# used for InflateColumn tests
+has birthday => (
+  isa => 'Str',
+  is  => 'rw',
+  add_column => {
+    data_type => 'date',
   },
 );
 
