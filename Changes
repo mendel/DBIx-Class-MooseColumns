@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.09    2010-06-21 15:43:00+0200
+        Fixed a silly quoting issue in the accessor inlining code.
+
 0.08    2010-06-21 15:21:00+0200
         Does not export Moose sugar any more.
         Added tests for warnings during "has" processing.

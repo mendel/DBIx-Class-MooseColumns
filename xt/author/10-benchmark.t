@@ -26,7 +26,7 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
 
   is_faster(1 / 0.95, -3,
     sub {
-      my $dummy = $artist1->name;
+      my $dummy = $artist1->phone;
     },
     sub {
       my $dummy = $artist1->address;
@@ -36,7 +36,7 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
 
   is_faster(1 / 0.90, -3,
     sub {
-      $artist1->name(random_string("."));
+      $artist1->phone(random_string("."));
     },
     sub {
       $artist1->address(random_string("."));

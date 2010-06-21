@@ -80,6 +80,28 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     );
   } "value returned by 'name' accessor is 'quux'";
 
+
+  lives_and {
+    cmp_deeply(
+      $artist1->name(undef),
+      undef
+    );
+  } "calling the 'name' accessor to set 'name' to undef returns undef";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->get_column('name'),
+      undef
+    );
+  } "value returned by get_column('name') is undef";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->name,
+      undef
+    );
+  } "value returned by 'name' accessor is undef";
+
   #FIXME other methods (predicate, clearer, ...)
   #FIXME test Moose triggers
 }

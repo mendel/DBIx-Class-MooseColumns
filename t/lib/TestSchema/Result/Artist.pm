@@ -22,9 +22,9 @@ has artist_id => (
   },
 );
 
-# used for testing if ->add_column() works and for benchmarking (Moose accessor)
+# used for testing if ->add_column() works
 has name => (
-  isa => 'Str',
+  isa => 'Maybe[Str]',
   is  => 'rw',
   add_column => {
     is_nullable => 0,
@@ -33,7 +33,7 @@ has name => (
 
 # used to test custom accessor
 has title => (
-  isa => 'Str',
+  isa => 'Maybe[Str]',
   is  => 'rw',
   accessor => '_title',
   add_column => {
@@ -42,16 +42,24 @@ has title => (
 
 # used for InflateColumn tests
 has birthday => (
-  isa => 'Str',
+  isa => 'Maybe[Str]',
   is  => 'rw',
   add_column => {
     data_type => 'date',
   },
 );
 
+# used for benchmarking (Moose accessor)
+has phone => (
+  # no type constraint (to be fair)
+  is  => 'rw',
+  add_column => {
+  },
+);
+
 # used for benchmarking (CAG accessor)
 has address => (
-  isa => 'Str',
+  isa => 'Maybe[Str]',
   is  => 'rw',
 );
 
