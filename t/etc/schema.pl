@@ -1,5 +1,5 @@
 {
-	schema_class  => 'TestSchema',
+  schema_class  => 'TestSchema',
   fixture_sets  => {
     basic => {
       'Artist'  => [
