@@ -6,7 +6,7 @@ use Moose::Util::MetaRole;
 
 use DBIx::Class::MooseColumns::Meta::Attribute;
 
-Moose::Exporter->setup_import_methods( also => 'Moose' );
+Moose::Exporter->setup_import_methods();
 
 sub init_meta {
   my ($class, %args) = (shift, @_);
