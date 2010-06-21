@@ -3,6 +3,7 @@ Revision history for DBIx-Class-MooseColumns
 0.08    2010-06-21 14:04:00+0200
         Does not export Moose sugar any more.
 	Added tests for warnings during "has" processing.
+	Does not store the whole \%column_info in the attribute.
 
 0.07    2010-06-17 17:02:00+0200
         Added missing test dep for MooseX::NonMoose.

@@ -10,10 +10,9 @@ DBIx::Class::MooseColumns::Meta::Attribute - Attribute metaclass trait for DBIx:
 
 use DBIx::Class::MooseColumns::Meta::Method::Accessor;
 
-has _dbix_class_moosecolumns_column_info => (
-  isa       => 'Maybe[HashRef]',
+has has_dbix_class_moosecolumns_column_info => (
+  isa       => 'Bool',
   is        => 'rw',
-  predicate => 'has__dbix_class_moosecolumns_column_info',
 );
 
 around accessor_metaclass => sub {
@@ -38,7 +37,7 @@ around new => sub {
   my $self = $class->$orig($name, %options);
 
   if ($column_info) {
-    $self->_dbix_class_moosecolumns_column_info($column_info);
+    $self->has_dbix_class_moosecolumns_column_info(1);
   }
 
   return $self;
