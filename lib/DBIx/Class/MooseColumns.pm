@@ -79,7 +79,7 @@ our $VERSION = '0.09';
 
   __PACKAGE__->set_primary_key('id');
 
-  __PACKAGE__->meta->make_immutable(inline_constructor => 0);
+  __PACKAGE__->meta->make_immutable( inline_constructor => 0 );
 
   1;
 
