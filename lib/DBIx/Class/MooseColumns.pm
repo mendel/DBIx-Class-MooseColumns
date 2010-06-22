@@ -30,11 +30,11 @@ DBIx::Class::MooseColumns - Lets you write DBIC add_column() definitions as attr
 
 =head1 VERSION
 
-Version 0.09
+Version 0.10
 
 =cut
 
-our $VERSION = '0.09';
+our $VERSION = '0.10';
 
 
 =head1 SYNOPSIS
