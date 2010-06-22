@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.10    2010-06-22 16:43:00+0200
+	Documented the order of "has", "table" and "set_primary_key".
+
 0.09    2010-06-21 15:43:00+0200
         Fixed a silly quoting issue in the accessor inlining code.
 

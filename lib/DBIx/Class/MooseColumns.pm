@@ -47,6 +47,8 @@ our $VERSION = '0.09';
 
   extends 'DBIx::Class::Core';
 
+  __PACKAGE__->table('artist');
+
   has id => (
     isa => 'Int',
     is  => 'rw',
@@ -75,6 +77,8 @@ our $VERSION = '0.09';
     is  => 'rw',
   );
 
+  __PACKAGE__->set_primary_key('id');
+
   __PACKAGE__->meta->make_immutable(inline_constructor => 0);
 
   1;
@@ -92,6 +96,16 @@ It also replaces the L<DBIx::Class>-generated accessor methods (these are
 L<Class::Accessor::Grouped>-generated accessor methods under the hood) with the
 L<Moose>-generated accessor methods so that you can use more of the wonderful
 powers of L<Moose> (eg. type constraints, triggers, ...).
+
+I<Note:> C<< __PACKAGE__->table(...) >> must go B<before> the C<has> stanzas
+(the L<DBIx::Class::ResultSource/table> is magic and does much more than
+setting the table name, thus the C<< __PACKAGE__->add_column(...) >> calls that
+the C<has> triggers won't work before that).
+
+I<Note:> C<< __PACKAGE__->set_primary_key(...) >> and C<<
+__PACKAGE__->add_unique_constraint(...) >> calls must go B<after> the C<has>
+stanzas (since they depend on the referred columns being registered via C<<
+__PACKAGE__->add_column(...) >> and that call is done when the C<has> runs).
 
 =head1 SEE ALSO
 
