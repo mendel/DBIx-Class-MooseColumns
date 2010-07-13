@@ -5,9 +5,15 @@ use Moose;
 #use MooseX::NonMoose;
 use namespace::autoclean;
 
-use DBIx::Class::MooseColumns;
-
-extends 'DBIx::Class::Core';
+BEGIN {
+  if (grep { $_ eq 'subclass' } @ARGV) {
+    extends 'TestSchema::Result';
+  }
+  else {
+    eval q{ use DBIx::Class::MooseColumns; 1; } or die;
+    extends 'DBIx::Class::Core';
+  }
+}
 
 __PACKAGE__->load_components(qw/InflateColumn::DateTime/);
 
