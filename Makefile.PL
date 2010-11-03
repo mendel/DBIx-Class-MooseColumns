@@ -26,6 +26,7 @@ test_requires 'Test::DBIx::Class'     => '0.10';
 test_requires 'FindBin'               => 0;
 test_requires 'Path::Class'           => '0.16';
 test_requires 'MooseX::NonMoose'      => '0.08';
+test_requires 'Test::Steering'        => '0.02';
 
 author_requires 'Test::Pod'           => '1.22';
 author_requires 'Test::Pod::Coverage' => '1.08';

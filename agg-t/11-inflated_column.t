@@ -7,7 +7,7 @@ use Test::Most;
 
 use FindBin;
 use Path::Class;
-use lib dir($FindBin::Bin)->subdir('lib')->stringify;
+use lib dir($FindBin::Bin)->parent->subdir('t', 'lib')->stringify;
 
 use Test::DBIx::Class;
 

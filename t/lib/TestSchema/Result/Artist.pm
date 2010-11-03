@@ -89,7 +89,8 @@ sub title
 __PACKAGE__->set_primary_key('artist_id');
 
 #TODO why does MooseX::NonMoose makes Test::DBIx::Class break?
-#__PACKAGE__->meta->make_immutable;
-__PACKAGE__->meta->make_immutable(inline_constructor => 0);
+#__PACKAGE__->meta->make_immutable if grep { $_ eq 'immutable' } @ARGV;
+__PACKAGE__->meta->make_immutable(inline_constructor => 0)
+  if grep { $_ eq 'immutable' } @ARGV;
 
 1;

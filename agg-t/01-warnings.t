@@ -7,7 +7,7 @@ use Test::Most;
 
 use FindBin;
 use Path::Class;
-use lib dir($FindBin::Bin)->subdir('lib')->stringify;
+use lib dir($FindBin::Bin)->parent->subdir('t', 'lib')->stringify;
 
 use Test::DBIx::Class;
 
@@ -21,8 +21,11 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
       use Moose;
       use namespace::autoclean;
 
-      my %immutable_options = __PACKAGE__->meta->immutable_options;
-      __PACKAGE__->meta->make_mutable;
+      my $meta = __PACKAGE__->meta;
+      my $immutable_options
+        = $meta->is_immutable  ? { $meta->immutable_options }
+                               : undef;
+      $meta->make_mutable if $immutable_options;
 
       has votes => (
         isa => 'Int',
@@ -31,7 +34,10 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
         },
       );
 
-      __PACKAGE__->meta->make_immutable(%immutable_options);
+      $meta->make_immutable(%$immutable_options)
+        if $immutable_options;
+
+      1;
 END
   } [], "No warnings while loading the test schema";
 }
