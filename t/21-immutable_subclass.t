@@ -3,10 +3,15 @@
 use strict;
 use warnings;
 
-use Test::Steering;
+use Test::Aggregate::Nested;
 
 use FindBin;
 use Path::Class;
 use lib dir($FindBin::Bin)->subdir('lib')->stringify;
 
-include_tests { test_args => [ 'immutable', 'subclass' ] }, 'agg-t/user/*.t';
+$ENV{DBIC_MOOSECOLUMNS_SUBCLASS}  = 1;
+$ENV{DBIC_MOOSECOLUMNS_IMMUTABLE} = 1;
+
+Test::Aggregate::Nested->new({
+  dirs => 'agg-t/user',
+})->run;

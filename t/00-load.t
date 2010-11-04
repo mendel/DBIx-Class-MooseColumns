@@ -5,9 +5,7 @@ use warnings;
 
 use Test::Most;
 
-BEGIN {
-  use_ok( 'DBIx::Class::MooseColumns' );
-}
+use_ok( 'DBIx::Class::MooseColumns' );
 
 diag( "Testing DBIx::Class::MooseColumns $DBIx::Class::MooseColumns::VERSION, Perl $], $^X" );
 

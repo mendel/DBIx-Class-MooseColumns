@@ -6,7 +6,7 @@ use Moose;
 use namespace::autoclean;
 
 BEGIN {
-  if (grep { $_ eq 'subclass' } @ARGV) {
+  if ($ENV{DBIC_MOOSECOLUMNS_SUBCLASS}) {
     extends 'TestSchema::Result';
   }
   else {
@@ -95,8 +95,8 @@ sub title
 __PACKAGE__->set_primary_key('artist_id');
 
 #TODO why does MooseX::NonMoose makes Test::DBIx::Class break?
-#__PACKAGE__->meta->make_immutable if grep { $_ eq 'immutable' } @ARGV;
+#__PACKAGE__->meta->make_immutable if $ENV{DBIC_MOOSECOLUMNS_IMMUTABLE};
 __PACKAGE__->meta->make_immutable(inline_constructor => 0)
-  if grep { $_ eq 'immutable' } @ARGV;
+  if $ENV{DBIC_MOOSECOLUMNS_IMMUTABLE};
 
 1;
