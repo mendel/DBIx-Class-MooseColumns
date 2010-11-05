@@ -1,28 +1,15 @@
 package DBIx::Class::MooseColumns::Meta::Attribute;
 
 use Moose::Role;
+use namespace::autoclean;
+
+use Moose::Util qw(ensure_all_roles);
 
 =head1 NAME
 
 DBIx::Class::MooseColumns::Meta::Attribute - Attribute metaclass trait for DBIx::Class::MooseColumns
 
 =cut
-
-use DBIx::Class::MooseColumns::Meta::Method::Accessor;
-
-has has_dbix_class_moosecolumns_column_info => (
-  isa       => 'Bool',
-  is        => 'rw',
-);
-
-has is_dbix_class_moosecolumns_inflated_column => (
-  isa       => 'Bool',
-  is        => 'rw',
-);
-
-around accessor_metaclass => sub {
-  return 'DBIx::Class::MooseColumns::Meta::Method::Accessor';
-};
 
 around new => sub {
   my ($orig, $class, $name, %options) = @_;
@@ -37,9 +24,11 @@ around new => sub {
     
     $target_pkg->add_column($name => $column_info);
 
-    # removing the accessor method that CAG installed (otherwise Moose complains)
+    # removing the accessor method that CAG installed (otherwise Moose
+    # complains)
     $target_pkg->meta->remove_method($column_info->{accessor} || $name);
 
+    #FIXME respect the API - check for $target_pkg->inflate_column() calls instead of peeking into the guts of the object
     if (exists $target_pkg->column_info($name)->{_inflate_info}) {
       $is_inflated_column = 1;
     }
@@ -48,11 +37,12 @@ around new => sub {
   my $self = $class->$orig($name, %options);
 
   if ($column_info) {
-    $self->has_dbix_class_moosecolumns_column_info(1);
+    ensure_all_roles($self,
+      $is_inflated_column
+        ? 'DBIx::Class::MooseColumns::Meta::Attribute::DBICColumn::Inflated'
+        : 'DBIx::Class::MooseColumns::Meta::Attribute::DBICColumn'
+    );
   }
-
-  #TODO respect the API - check for $target_pkg->inflate_column() calls instead of peeking into the guts of the object
-  $self->is_dbix_class_moosecolumns_inflated_column($is_inflated_column);
 
   return $self;
 };
