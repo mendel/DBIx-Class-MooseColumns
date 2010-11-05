@@ -1,7 +1,16 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.11    2010-11-06 14:10:00+0100
+        Reworked tests to test both mutable and immutable classes.
+        Added tests to make sure the features work in subclasses.
+        Re-thought and rewrote the the DBIC proxy of the attributes. (Much
+            cleaner and faster and also works with Moose 1.19. Unfortunately
+            this does not work with older Moose.)
+        Runs the benchmark author tests for both mutable and immutable classes.
+	Added tests for the case when the instance metaclass is non-inlinable.
+
 0.10    2010-06-22 16:43:00+0200
-	Documented the order of "has", "table" and "set_primary_key".
+        Documented the order of "has", "table" and "set_primary_key".
 
 0.09    2010-06-21 15:43:00+0200
         Fixed a silly quoting issue in the accessor inlining code.
