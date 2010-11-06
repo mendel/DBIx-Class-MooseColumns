@@ -21,10 +21,13 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   #TODO is there a way to find where the sub was declared? (other than redirecting and filtering Devel::Peek output)
 }
 
+my $read_speed_ratio  = $ENV{DBIC_MOOSECOLUMNS_NON_INLINABLE} ? 0.25 : 0.95;
+my $write_speed_ratio = $ENV{DBIC_MOOSECOLUMNS_NON_INLINABLE} ? 0.50 : 0.90;
+
 {
   my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
 
-  is_faster(1 / 0.95, -3,
+  is_faster(1 / $read_speed_ratio, -3,
     sub {
       my $dummy = $artist1->phone;
     },
@@ -34,7 +37,7 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     "The read speed of the Moose accessor is at least 95% of the CAG accessor"
   );
 
-  is_faster(1 / 0.90, -3,
+  is_faster(1 / $write_speed_ratio, -3,
     sub {
       $artist1->phone(random_string("."));
     },
