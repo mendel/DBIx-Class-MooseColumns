@@ -102,8 +102,7 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     );
   } "value returned by 'name' accessor is undef";
 
-  #FIXME other methods (predicate, clearer, ...)
-  #FIXME test Moose triggers
+  #FIXME other methods/options (predicate, clearer, builder, initializer, default, trigger, ...)
 }
 
 {
