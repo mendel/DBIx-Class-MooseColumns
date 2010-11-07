@@ -101,11 +101,27 @@ has is_active => (
   },
 );
 
+# used to test the initializer
+has favourite_color => (
+  isa => 'Maybe[Str]',
+  is  => 'rw',
+  initializer => '_initialize_favourite_color',
+  add_column => {
+  },
+);
+
 sub _build_initials
 {
   my ($self) = (shift, @_);
 
   return join "", map { uc $_ } ($self->name || "") =~ /(?:^| )(.)/g;
+}
+
+sub _initialize_favourite_color
+{
+  my ($self, $value, $setter, $attr) = (shift, @_);
+
+  $setter->(lc $value);
 }
 
 # silly example (better to do this with a trigger) but i couldn't invent

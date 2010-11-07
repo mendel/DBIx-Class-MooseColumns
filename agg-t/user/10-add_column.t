@@ -189,6 +189,25 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   } "'initials' accessor returns the value built by the builder";
 }
 
+# tests for the initializer method
+
+{
+  my $artist1;
+  lives_ok {
+    $artist1 = Schema->resultset('Artist')->new({
+      artist_id       => 1,
+      favourite_color => 'BLUE',
+    });
+  } "'new' does not die";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->favourite_color,
+      'blue'
+    );
+  } "'favourite_color' accessor returns the value munged by the initializer";
+}
+
 # tests for custom accessor name
 
 {
@@ -239,6 +258,6 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   } "value returned by 'title' method is undef";
 }
 
-#FIXME other methods/options (initializer, trigger, ...)
+#FIXME other methods/options (trigger, ...)
 
 done_testing;
