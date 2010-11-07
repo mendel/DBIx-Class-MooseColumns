@@ -92,6 +92,15 @@ has initials => (
   },
 );
 
+# used to test the default value
+has is_active => (
+  isa => 'Int',
+  is  => 'rw',
+  default => 1,
+  add_column => {
+  },
+);
+
 sub _build_initials
 {
   my ($self) = (shift, @_);

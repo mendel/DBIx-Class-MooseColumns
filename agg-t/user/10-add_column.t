@@ -152,6 +152,24 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   }
 }
 
+# tests for using the default value ('default' attribute option)
+
+{
+  my $artist1;
+  lives_ok {
+    $artist1 = Schema->resultset('Artist')->new({
+      artist_id => 1,
+    });
+  } "'new' does not die";
+
+  lives_and {
+    cmp_deeply(
+      $artist1->is_active,
+      1,
+    );
+  } "'is_active' accessor returns the default value";
+}
+
 # tests for the builder method
 
 {
@@ -221,6 +239,6 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   } "value returned by 'title' method is undef";
 }
 
-#FIXME other methods/options (initializer, default, trigger, ...)
+#FIXME other methods/options (initializer, trigger, ...)
 
 done_testing;
