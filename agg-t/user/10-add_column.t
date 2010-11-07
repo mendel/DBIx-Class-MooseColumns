@@ -13,6 +13,8 @@ use Test::DBIx::Class;
 
 fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
 
+# tests for ->add_column() being called
+
 {
   throws_ok {
     Schema->resultset('Artist')->result_source->column_info('guess');
@@ -37,6 +39,8 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     );
   } "column_info of 'name' contains ('is_nullable' => 0)";
 }
+
+# tests for the reader/writer
 
 {
   my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
@@ -101,9 +105,9 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
       undef
     );
   } "value returned by 'name' accessor is undef";
-
-  #FIXME other methods/options (clearer, builder, initializer, default, trigger, ...)
 }
+
+# tests for the predicate method
 
 {
   my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
@@ -124,6 +128,8 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     );
   } "'has_name' predicate returns false for an uninitialized column";
 }
+
+# tests for custom accessor name
 
 {
   my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
@@ -172,5 +178,7 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     );
   } "value returned by 'title' method is undef";
 }
+
+#FIXME other methods/options (builder, initializer, default, trigger, ...)
 
 done_testing;
