@@ -1,8 +1,7 @@
 package TestSchema::Result::Artist;
 
 use Moose;
-#TODO why does MooseX::NonMoose makes Test::DBIx::Class break?
-#use MooseX::NonMoose;
+use MooseX::NonMoose;
 use namespace::autoclean;
 
 use TestUtils::MakeInstanceMetaClassNonInlinableIf
@@ -117,10 +116,7 @@ sub title
 
 __PACKAGE__->set_primary_key('artist_id');
 
-#TODO why does MooseX::NonMoose makes Test::DBIx::Class break?
-#__PACKAGE__->meta->make_immutable
-#  if $ENV{DBIC_MOOSECOLUMNS_IMMUTABLE} && !$ENV{DBIC_MOOSECOLUMNS_NON_INLINABLE};
-__PACKAGE__->meta->make_immutable(inline_constructor => 0)
+__PACKAGE__->meta->make_immutable( inline_constructor => 0 )
   if $ENV{DBIC_MOOSECOLUMNS_IMMUTABLE} && !$ENV{DBIC_MOOSECOLUMNS_NON_INLINABLE};
 
 1;
