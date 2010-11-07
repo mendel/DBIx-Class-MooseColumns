@@ -77,11 +77,28 @@ has address => (
 
 __PACKAGE__->add_column( address => {} );
 
+# used for testing if ->add_column() works (ie. not called on this attribute)
 has guess => (
   isa => 'Int',
   is  => 'ro',
   default => sub { int(rand 100)+1 },
 );
+
+# used to test the builder
+has initials => (
+  isa => 'Str',
+  is  => 'rw',
+  builder    => '_build_initials',
+  add_column => {
+  },
+);
+
+sub _build_initials
+{
+  my ($self) = (shift, @_);
+
+  return join "", map { uc $_ } ($self->name || "") =~ /(?:^| )(.)/g;
+}
 
 # silly example (better to do this with a trigger) but i couldn't invent
 # anything better :-)

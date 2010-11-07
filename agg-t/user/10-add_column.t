@@ -119,7 +119,9 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     );
   } "'has_name' predicate returns true for a loaded column";
 
-  $artist1 = Schema->resultset('Artist')->new({ artist_id => 1 });
+  lives_ok {
+    $artist1 = Schema->resultset('Artist')->new({ artist_id => 1 });
+  } "'new' does not die";
 
   lives_and {
     cmp_deeply(
@@ -147,6 +149,30 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
         bool(1)
       );
     } "'has_name' predicate returns true for a cleared column";
+  }
+}
+
+# tests for the builder method
+
+{
+  my $artist1;
+  lives_ok {
+    $artist1 = Schema->resultset('Artist')->new({
+      artist_id => 1,
+      name      => 'John Lennon',
+    });
+  } "'new' does not die";
+
+  TODO: {
+    local $TODO
+      = "Currently the builder is not called (not using the Moose constructor)";
+
+    lives_and {
+      cmp_deeply(
+        $artist1->initials,
+        'JL'
+      );
+    } "'initials' accessor returns the value built by the builder";
   }
 }
 
@@ -200,6 +226,6 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   } "value returned by 'title' method is undef";
 }
 
-#FIXME other methods/options (builder, initializer, default, trigger, ...)
+#FIXME other methods/options (initializer, default, trigger, ...)
 
 done_testing;
