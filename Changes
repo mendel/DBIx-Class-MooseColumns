@@ -1,5 +1,13 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.12    2010-11-07 23:27:00+0100
+	Added tests for the predicate, clearer (TODO), builder, initializer,
+	    default value.
+	Made the builder, initializer and default value work.
+	Fixed a bug (typo) in the clearer.
+	Renamed attribute metaclass roles to have ::Role:: in their name.
+	Using MooseX::NonMoose in the result classes of the tests again.
+
 0.11    2010-11-06 14:10:00+0100
         Reworked tests to test both mutable and immutable classes.
         Added tests to make sure the features work in subclasses.
