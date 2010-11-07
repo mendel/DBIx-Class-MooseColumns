@@ -81,7 +81,7 @@ around clear_value => sub {
   #delete $instance->{_column_data}{$self->name}
   #return;
 
-  $instance->throw_excption($clearer_unimplemented_error_msg);
+  $instance->throw_exception($clearer_unimplemented_error_msg);
 };
 
 
@@ -148,7 +148,7 @@ around inline_clear => sub {
 
   #FIXME see comments at L</clear_value>
 
-  return sprintf q[%s->throw_excption(%s);],
+  return sprintf q[%s->throw_exception("%s");],
     $instance, $clearer_unimplemented_error_msg;
 };
 

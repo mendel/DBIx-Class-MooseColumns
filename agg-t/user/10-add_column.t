@@ -129,6 +129,27 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   } "'has_name' predicate returns false for an uninitialized column";
 }
 
+# tests for the clearer method
+
+{
+  my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
+
+  TODO: {
+    local $TODO = "Currently the clearer is unimplemented";
+
+    lives_ok {
+      $artist1->clear_name;
+    } "'clear_name' does not die";
+
+    lives_and {
+      cmp_deeply(
+        $artist1->has_name,
+        bool(1)
+      );
+    } "'has_name' predicate returns true for a cleared column";
+  }
+}
+
 # tests for custom accessor name
 
 {

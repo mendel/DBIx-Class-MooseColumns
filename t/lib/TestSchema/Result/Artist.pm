@@ -31,11 +31,13 @@ has artist_id => (
   },
 );
 
-# used for testing if ->add_column() works
+# used for testing if ->add_column() works, also for reader/writer, predicate,
+# clearer methods
 has name => (
   isa => 'Maybe[Str]',
   is  => 'rw',
   predicate => 'has_name',
+  clearer   => 'clear_name',
   add_column => {
     is_nullable => 0,
   },
