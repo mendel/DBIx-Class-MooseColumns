@@ -163,17 +163,12 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     });
   } "'new' does not die";
 
-  TODO: {
-    local $TODO
-      = "Currently the builder is not called (not using the Moose constructor)";
-
-    lives_and {
-      cmp_deeply(
-        $artist1->initials,
-        'JL'
-      );
-    } "'initials' accessor returns the value built by the builder";
-  }
+  lives_and {
+    cmp_deeply(
+      $artist1->initials,
+      'JL'
+    );
+  } "'initials' accessor returns the value built by the builder";
 }
 
 # tests for custom accessor name

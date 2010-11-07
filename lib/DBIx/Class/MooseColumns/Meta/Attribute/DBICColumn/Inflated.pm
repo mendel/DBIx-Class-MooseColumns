@@ -84,6 +84,34 @@ around clear_value => sub {
   $instance->throw_exception($clearer_unimplemented_error_msg);
 };
 
+=head2 _set_initial_slot_value
+
+Overridden (wrapped with an C<around> method modifier) from
+L<Class::MOP::Attribute/_set_initial_slot_value>.
+
+Calls L<DBIx::Class::Row/set_column> to set the (deflated) column value.
+
+=cut
+
+around _set_initial_slot_value => sub {
+  my ($orig, $self, $meta_instance, $instance, $value) = (shift, shift, @_);
+
+  my $slot_name = $self->name;
+
+  return $instance->set_column($slot_name, $value)
+    unless $self->has_initializer;
+
+  my $callback = sub {
+    my $val = $self->_coerce_and_verify(shift, $instance);
+
+    return $instance->set_column($slot_name, $_[0])
+  };
+  
+  my $initializer = $self->initializer;
+
+  return $instance->$initializer($value, $callback, $self);
+};
+
 
 =head2 inline_has
 
