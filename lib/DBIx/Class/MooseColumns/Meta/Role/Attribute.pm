@@ -1,4 +1,4 @@
-package DBIx::Class::MooseColumns::Meta::Attribute;
+package DBIx::Class::MooseColumns::Meta::Role::Attribute;
 
 use Moose::Role;
 use namespace::autoclean;
@@ -7,7 +7,7 @@ use Moose::Util qw(ensure_all_roles);
 
 =head1 NAME
 
-DBIx::Class::MooseColumns::Meta::Attribute - Attribute metaclass trait for DBIx::Class::MooseColumns
+DBIx::Class::MooseColumns::Meta::Role::Attribute - Attribute metaclass trait for DBIx::Class::MooseColumns
 
 =cut
 
@@ -39,8 +39,8 @@ around new => sub {
   if ($column_info) {
     ensure_all_roles($self,
       $is_inflated_column
-        ? 'DBIx::Class::MooseColumns::Meta::Attribute::DBICColumn::Inflated'
-        : 'DBIx::Class::MooseColumns::Meta::Attribute::DBICColumn'
+        ? 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn::Inflated'
+        : 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn'
     );
   }
 

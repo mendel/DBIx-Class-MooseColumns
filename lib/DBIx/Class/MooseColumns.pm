@@ -1,7 +1,5 @@
 package DBIx::Class::MooseColumns;
 
-#TODO tests for default, builder, ...
-#TODO add tests for predicate and todo tests for clearer
 #TODO verify that Class::MOP re-uses the same anon class when applying the same role to an instance of the class
 
 use Moose ();
@@ -20,7 +18,7 @@ sub init_meta {
   Moose::Util::MetaRole::apply_metaroles(
     for             => $args{for_class},
     class_metaroles => {
-      attribute => ['DBIx::Class::MooseColumns::Meta::Attribute'],
+      attribute => ['DBIx::Class::MooseColumns::Meta::Role::Attribute'],
     },
   );
 

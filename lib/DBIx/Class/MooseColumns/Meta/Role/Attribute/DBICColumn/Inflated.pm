@@ -1,11 +1,11 @@
-package DBIx::Class::MooseColumns::Meta::Attribute::DBICColumn;
+package DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn::Inflated;
 
 use Moose::Role;
 use namespace::autoclean;
 
 =head1 NAME
 
-DBIx::Class::MooseColumns::Meta::Attribute::DBICColumn - Attribute metaclass trait for DBIx::Class::MooseColumns for attributes that are non-inflated DBIC columns
+DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn - Attribute metaclass trait for DBIx::Class::MooseColumns for attributes that are inflated DBIC columns
 
 =cut
 
@@ -34,14 +34,14 @@ around has_value => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/get_raw_value>.
 
-Calls L<DBIx::Class::Row/get_column> to get the (deflated) column value.
+Calls L<DBIx::Class::Row/get_inflated_column> to get the (deflated) column value.
 
 =cut
 
 around get_raw_value => sub {
   my ($orig, $self, $instance) = (shift, shift, @_);
 
-  return $instance->get_column($self->name);
+  return $instance->get_inflated_column($self->name);
 };
 
 =head2 set_raw_value
@@ -49,14 +49,14 @@ around get_raw_value => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/set_raw_value>.
 
-Calls L<DBIx::Class::Row/set_column> to set the (deflated) column value.
+Calls L<DBIx::Class::Row/set_inflated_column> to set the (deflated) column value.
 
 =cut
 
 around set_raw_value => sub {
   my ($orig, $self, $instance, $value) = (shift, shift, @_);
 
-  return $instance->set_column($self->name, $value);
+  return $instance->set_inflated_column($self->name, $value);
 };
 
 =head2 clear_value
@@ -87,7 +87,7 @@ around clear_value => sub {
 =head2 _set_initial_slot_value
 
 Overridden (wrapped with an C<around> method modifier) from
-L<Moose::Meta::Attribute/_set_initial_slot_value>.
+L<Class::MOP::Attribute/_set_initial_slot_value>.
 
 Calls L<DBIx::Class::Row/set_column> to set the (deflated) column value.
 
@@ -104,7 +104,7 @@ around _set_initial_slot_value => sub {
   my $callback = sub {
     my $val = $self->_coerce_and_verify(shift, $instance);
 
-    return $instance->set_column($slot_name, $val);
+    return $instance->set_column($slot_name, $_[0])
   };
   
   my $initializer = $self->initializer;
@@ -135,14 +135,14 @@ around inline_has => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/inline_get>.
 
-Calls L<DBIx::Class::Row/get_column> to get the (deflated) column value.
+Calls L<DBIx::Class::Row/get_inflated_column> to get the (deflated) column value.
 
 =cut
 
 around inline_get => sub {
   my ($orig, $self, $instance) = (shift, shift, @_);
 
-  return sprintf q[%s->get_column("%s")],
+  return sprintf q[%s->get_inflated_column("%s")],
     $instance, quotemeta($self->name);
 };
 
@@ -151,14 +151,14 @@ around inline_get => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/inline_set>.
 
-Calls L<DBIx::Class::Row/set_column> to set the (deflated) column value.
+Calls L<DBIx::Class::Row/set_inflated_column> to set the (deflated) column value.
 
 =cut
 
 around inline_set => sub {
   my ($orig, $self, $instance, $value) = (shift, shift, @_);
 
-  return sprintf q[%s->set_column("%s", %s)],
+  return sprintf q[%s->set_inflated_column("%s", %s)],
     $instance, quotemeta($self->name), $value;
 };
 
