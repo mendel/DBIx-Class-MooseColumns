@@ -35,6 +35,7 @@ has artist_id => (
 has name => (
   isa => 'Maybe[Str]',
   is  => 'rw',
+  predicate => 'has_name',
   add_column => {
     is_nullable => 0,
   },

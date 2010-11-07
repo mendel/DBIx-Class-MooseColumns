@@ -102,7 +102,27 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
     );
   } "value returned by 'name' accessor is undef";
 
-  #FIXME other methods/options (predicate, clearer, builder, initializer, default, trigger, ...)
+  #FIXME other methods/options (clearer, builder, initializer, default, trigger, ...)
+}
+
+{
+  my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
+
+  lives_and {
+    cmp_deeply(
+      $artist1->has_name,
+      bool(1)
+    );
+  } "'has_name' predicate returns true for a loaded column";
+
+  $artist1 = Schema->resultset('Artist')->new({ artist_id => 1 });
+
+  lives_and {
+    cmp_deeply(
+      $artist1->has_name,
+      bool(0)
+    );
+  } "'has_name' predicate returns false for an uninitialized column";
 }
 
 {
