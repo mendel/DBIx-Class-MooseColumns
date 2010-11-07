@@ -1,5 +1,9 @@
 package DBIx::Class::MooseColumns;
 
+#TODO tests for default, builder, ...
+#TODO add tests for predicate and todo tests for clearer
+#TODO verify that Class::MOP re-uses the same anon class when applying the same role to an instance of the class
+
 use Moose ();
 use Moose::Exporter;
 use Moose::Util::MetaRole;
