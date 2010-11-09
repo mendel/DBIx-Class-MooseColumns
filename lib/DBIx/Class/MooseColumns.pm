@@ -4,7 +4,7 @@ use Moose ();
 use Moose::Exporter;
 use Moose::Util::MetaRole;
 
-use DBIx::Class::MooseColumns::Meta::Attribute;
+use DBIx::Class::MooseColumns::Meta::Role::Attribute;
 
 Moose::Exporter->setup_import_methods();
 
