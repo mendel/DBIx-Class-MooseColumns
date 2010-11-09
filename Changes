@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.13    2010-11-09 09:49:00+0100
+	Fixed a silly renaming bug.
+
 0.12    2010-11-07 23:27:00+0100
 	Added tests for the predicate, clearer (TODO), builder, initializer,
 	    default value.
