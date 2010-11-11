@@ -1,5 +1,9 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.14    2010-11-11 17:10:00+0100
+	Fixed a bug in the fixture (made false test failures with some
+	    SQLite/SQL::Translator versions).
+
 0.13    2010-11-09 09:49:00+0100
 	Fixed a silly renaming bug.
 
