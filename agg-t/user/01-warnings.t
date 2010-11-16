@@ -9,36 +9,15 @@ use FindBin;
 use Path::Class;
 use lib dir($FindBin::Bin)->parent->parent->subdir('t', 'lib')->stringify;
 
-use Test::DBIx::Class;
-
-fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
+use IO::All;
 
 {
+  my $code = join "", map { $_->slurp }
+    ( io('t/lib/TestSchema.pm'), io('t/lib/TestSchema')->deep->all_files );
+  $code =~ s/\bTestSchema\b/TestSchema::WarningTest/g;
+
   warnings_are {
-    eval <<'END' or die;
-      package TestSchema::Result::Artist;
-
-      use Moose;
-      use namespace::autoclean;
-
-      my $meta = __PACKAGE__->meta;
-      my $immutable_options
-        = $meta->is_immutable  ? { $meta->immutable_options }
-                               : undef;
-      $meta->make_mutable if $immutable_options;
-
-      has votes => (
-        isa => 'Int',
-        is  => 'rw',
-        add_column => {
-        },
-      );
-
-      $meta->make_immutable(%$immutable_options)
-        if $immutable_options;
-
-      1;
-END
+    eval $code or die;
   } [], "No warnings while loading the test schema";
 }
 

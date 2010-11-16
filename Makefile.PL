@@ -24,6 +24,7 @@ test_requires 'Test::Differences'       => '0.4801';
 test_requires 'Test::Deep'              => '0.103';
 test_requires 'Test::DBIx::Class'       => '0.10';
 test_requires 'FindBin'                 => 0;
+test_requires 'IO::All'                 => '0.41';
 test_requires 'Path::Class'             => '0.16';
 test_requires 'MooseX::NonMoose'        => '0.16';
 test_requires 'Test::Aggregate::Nested' => '0.363';
