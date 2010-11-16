@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.15    2010-11-16 14:52:00+0100
+	Fixed a bug in agg-t/user/01-warnings.t. Used to fail on Perl 5.8.
+
 0.14    2010-11-11 17:10:00+0100
 	Fixed a bug in the fixture (made false test failures with some
 	    SQLite/SQL::Translator versions).
