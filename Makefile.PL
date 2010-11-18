@@ -15,6 +15,7 @@ all_from      'lib/DBIx/Class/MooseColumns.pm';
 readme_from   'lib/DBIx/Class/MooseColumns.pm' => 'clean';
 auto_set_repository;
 
+requires 'Class::MOP'                   => '1.11';
 requires 'Moose'                        => '1.19';
 requires 'namespace::autoclean'         => '0.09';
 

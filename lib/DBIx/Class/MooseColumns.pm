@@ -1,5 +1,6 @@
 package DBIx::Class::MooseColumns;
 
+use Class::MOP;
 use Moose ();
 use Moose::Exporter;
 use Moose::Util::MetaRole;
@@ -20,7 +21,21 @@ sub init_meta {
     },
   );
 
-  return $args{for_class}->meta;
+  my $meta = $args{for_class}->meta;
+
+  # work around a strange bug: DBIx::Class::Schema::compose_namespace() does
+  # not initialize the metaclasses of the new result source classes, but
+  # Moose::Object::does() expects them to be initialized
+  # warning: this blows up if the class does not inherit from Moose::Object!
+  # FIXME think more and ask on #moose (when online again) for a cleaner fix
+  $meta->add_before_method_modifier(
+    does => sub {
+      my ($self, $role_name) = (shift, @_);
+        Class::MOP::Class->initialize(ref $self || $self);
+    }
+  );
+
+  return $meta;
 }
 
 

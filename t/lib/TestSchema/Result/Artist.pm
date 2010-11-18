@@ -17,6 +17,8 @@ BEGIN {
   }
 }
 
+with 'TestSchema::Role::Dummy';
+
 __PACKAGE__->load_components(qw/InflateColumn::DateTime/);
 
 __PACKAGE__->table('artist');
