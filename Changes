@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.16    2010-12-14 11:19:00+0100
+	Fixed Test::Aggregate dependency.
+
 0.15    2010-11-16 14:52:00+0100
 	Fixed a bug in agg-t/user/01-warnings.t. Used to fail on Perl 5.8.
 
