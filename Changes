@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.17    2011-01-27 12:11:00+0100
+	Workaround to make it work with new (1.21) Moose.
+
 0.16    2010-12-14 11:19:00+0100
 	Fixed Test::Aggregate dependency.
 
