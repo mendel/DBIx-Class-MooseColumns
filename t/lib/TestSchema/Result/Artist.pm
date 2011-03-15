@@ -48,6 +48,7 @@ has title => (
   is  => 'rw',
   accessor => '_title',
   add_column => {
+    is_nullable => 1,
   },
 );
 
@@ -56,6 +57,7 @@ has birthday => (
   isa => 'Maybe[Str]',
   is  => 'rw',
   add_column => {
+    is_nullable => 1,
     data_type => 'date',
   },
 );
@@ -107,6 +109,7 @@ has favourite_color => (
   is  => 'rw',
   initializer => '_initialize_favourite_color',
   add_column => {
+    is_nullable => 1,
   },
 );
 
