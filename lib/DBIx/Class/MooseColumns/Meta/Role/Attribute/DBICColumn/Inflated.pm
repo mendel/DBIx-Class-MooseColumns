@@ -34,7 +34,8 @@ around has_value => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/get_raw_value>.
 
-Calls L<DBIx::Class::Row/get_inflated_column> to get the (deflated) column value.
+Calls L<DBIx::Class::Row/get_inflated_column> to get the (inflated) column
+value.
 
 =cut
 
@@ -49,7 +50,8 @@ around get_raw_value => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/set_raw_value>.
 
-Calls L<DBIx::Class::Row/set_inflated_column> to set the (deflated) column value.
+Calls L<DBIx::Class::Row/set_inflated_column> to set the (inflated) column
+value.
 
 =cut
 
@@ -89,7 +91,8 @@ around clear_value => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/_set_initial_slot_value>.
 
-Calls L<DBIx::Class::Row/set_column> to set the (deflated) column value.
+Calls L<DBIx::Class::Row/set_inflated_column> to set the (inflated) column
+value.
 
 =cut
 
@@ -98,13 +101,13 @@ around _set_initial_slot_value => sub {
 
   my $slot_name = $self->name;
 
-  return $instance->set_column($slot_name, $value)
+  return $instance->set_inflated_column($slot_name, $value)
     unless $self->has_initializer;
 
   my $callback = sub {
     my $val = $self->_coerce_and_verify(shift, $instance);
 
-    return $instance->set_column($slot_name, $_[0])
+    return $instance->set_inflated_column($slot_name, $_[0])
   };
   
   my $initializer = $self->initializer;
@@ -135,7 +138,8 @@ around inline_has => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/inline_get>.
 
-Calls L<DBIx::Class::Row/get_inflated_column> to get the (deflated) column value.
+Calls L<DBIx::Class::Row/get_inflated_column> to get the (inflated) column
+value.
 
 =cut
 
@@ -151,14 +155,15 @@ around inline_get => sub {
 Overridden (wrapped with an C<around> method modifier) from
 L<Class::MOP::Attribute/inline_set>.
 
-Calls L<DBIx::Class::Row/set_inflated_column> to set the (deflated) column value.
+Calls L<DBIx::Class::Row/set_inflated_column> to set the (inflated) column
+value.
 
 =cut
 
 around inline_set => sub {
   my ($orig, $self, $instance, $value) = (shift, shift, @_);
 
-  return sprintf q[%s->set_inflated_column("%s", %s)],
+  return sprintf q[%s->set_inflated_column("%s", %s);],
     $instance, quotemeta($self->name), $value;
 };
 
