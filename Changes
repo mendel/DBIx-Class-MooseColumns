@@ -1,28 +1,39 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.18    2011-03-15 13:29:00+0100
+        Workaround for a SQLite sillyness (columns are NOT NULL by default).
+        Removed workaround of a MooseX::NonMoose weirdness. (Now TestSchema does
+            not need a dummy constructor - which, btw, made 01-warnings.t fail.)
+        Fixed some set_column/set_inflated_column copy-paste errors.
+        Fixed a missing semicolon in
+            :Meta::Role::Attribute::DBICColumn::inline_set().
+            (This resulted in a syntax error in the generated accessor when a
+            trigger was defined.)
+        Tests for the trigger method (attribute option).
+
 0.17    2011-01-27 12:11:00+0100
-	Workaround to make it work with new (1.21) Moose.
+        Workaround to make it work with new (1.21) Moose.
 
 0.16    2010-12-14 11:19:00+0100
-	Fixed Test::Aggregate dependency.
+        Fixed Test::Aggregate dependency.
 
 0.15    2010-11-16 14:52:00+0100
-	Fixed a bug in agg-t/user/01-warnings.t. Used to fail on Perl 5.8.
+        Fixed a bug in agg-t/user/01-warnings.t. Used to fail on Perl 5.8.
 
 0.14    2010-11-11 17:10:00+0100
-	Fixed a bug in the fixture (made false test failures with some
-	    SQLite/SQL::Translator versions).
+        Fixed a bug in the fixture (made false test failures with some
+            SQLite/SQL::Translator versions).
 
 0.13    2010-11-09 09:49:00+0100
-	Fixed a silly renaming bug.
+        Fixed a silly renaming bug.
 
 0.12    2010-11-07 23:27:00+0100
-	Added tests for the predicate, clearer (TODO), builder, initializer,
-	    default value.
-	Made the builder, initializer and default value work.
-	Fixed a bug (typo) in the clearer.
-	Renamed attribute metaclass roles to have ::Role:: in their name.
-	Using MooseX::NonMoose in the result classes of the tests again.
+        Added tests for the predicate, clearer (TODO), builder, initializer,
+            default value.
+        Made the builder, initializer and default value work.
+        Fixed a bug (typo) in the clearer.
+        Renamed attribute metaclass roles to have ::Role:: in their name.
+        Using MooseX::NonMoose in the result classes of the tests again.
 
 0.11    2010-11-06 14:10:00+0100
         Reworked tests to test both mutable and immutable classes.
@@ -31,7 +42,7 @@ Revision history for DBIx-Class-MooseColumns
             cleaner and faster and also works with Moose 1.19. Unfortunately
             this does not work with older Moose.)
         Runs the benchmark author tests for both mutable and immutable classes.
-	Added tests for the case when the instance metaclass is non-inlinable.
+        Added tests for the case when the instance metaclass is non-inlinable.
 
 0.10    2010-06-22 16:43:00+0200
         Documented the order of "has", "table" and "set_primary_key".
