@@ -258,6 +258,24 @@ fixtures_ok 'basic', 'installed the basic fixtures from configuration files';
   } "value returned by 'title' method is undef";
 }
 
-#FIXME other methods/options (trigger, ...)
+# tests for the trigger method
+
+{
+  my $artist1 = Schema->resultset('Artist')->find({ artist_id => 1 });
+
+  $artist1->is_active(0);
+
+  lives_ok {
+    $artist1->last_album('Foo Bar');
+  } "setting the attribute with the trigger does not throw";
+
+  cmp_deeply(
+    $artist1->is_active,
+    1,
+    "the trigger set the 'is_active' attribute"
+  );
+}
+
+#FIXME other methods/options
 
 done_testing;

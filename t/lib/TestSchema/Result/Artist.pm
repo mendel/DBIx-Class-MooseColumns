@@ -113,6 +113,20 @@ has favourite_color => (
   },
 );
 
+# used for testing the trigger method
+has last_album => (
+  isa         => 'Maybe[Str]',
+  is          => 'rw',
+  add_column  => {
+    is_nullable => 1,
+  },
+  trigger     => sub {
+    my ($self, $new_value, $old_value) = (shift, @_);
+
+    $self->is_active(1);
+  },
+);
+
 sub _build_initials
 {
   my ($self) = (shift, @_);
