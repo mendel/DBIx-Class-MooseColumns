@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.19    2011-03-15 17:52:00+0100
+        Moose 1.99+ compatibility (but still works with Moose 1.24).
+
 0.18    2011-03-15 13:29:00+0100
         Workaround for a SQLite sillyness (columns are NOT NULL by default).
         Removed workaround of a MooseX::NonMoose weirdness. (Now TestSchema does
