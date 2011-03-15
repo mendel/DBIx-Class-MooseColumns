@@ -158,7 +158,7 @@ Calls L<DBIx::Class::Row/set_column> to set the (deflated) column value.
 around inline_set => sub {
   my ($orig, $self, $instance, $value) = (shift, shift, @_);
 
-  return sprintf q[%s->set_column("%s", %s)],
+  return sprintf q[%s->set_column("%s", %s);],
     $instance, quotemeta($self->name), $value;
 };
 
