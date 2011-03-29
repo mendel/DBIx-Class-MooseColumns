@@ -11,40 +11,48 @@ DBIx::Class::MooseColumns::Meta::Role::Attribute - Attribute metaclass trait for
 
 =cut
 
+has _column_info => (
+  isa => 'Maybe[HashRef]',
+  is  => 'rw',
+);
+
 around new => sub {
   my ($orig, $class, $name, %options) = @_;
 
   my $column_info = delete $options{add_column};
   $column_info->{accessor} = $options{accessor} if $options{accessor};
 
-  my $is_inflated_column;
-
-  if ($column_info) {
-    my $target_pkg = $options{definition_context}->{package};
-    
-    $target_pkg->add_column($name => $column_info);
-
-    # removing the accessor method that CAG installed (otherwise Moose
-    # complains)
-    $target_pkg->meta->remove_method($column_info->{accessor} || $name);
-
-    #FIXME respect the API - check for $target_pkg->inflate_column() calls instead of peeking into the guts of the object
-    if (exists $target_pkg->column_info($name)->{_inflate_info}) {
-      $is_inflated_column = 1;
-    }
-  }
-
   my $self = $class->$orig($name, %options);
 
-  if ($column_info) {
-    ensure_all_roles($self,
-      $is_inflated_column
-        ? 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn::Inflated'
-        : 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn'
-    );
-  }
+  $self->_column_info($column_info);
 
   return $self;
+};
+
+before attach_to_class => sub {
+  my ($self, $meta) = @_;
+
+  my $column_info = $self->_column_info
+    or return;
+
+  my $class     = $meta->name;
+  my $attr_name = $self->name;
+
+  $class->add_column($attr_name => $column_info);
+
+  # removing the accessor method that CAG installed (otherwise Moose
+  # complains)
+  $meta->remove_method($column_info->{accessor} || $attr_name);
+
+  #FIXME respect the API - check for $class->inflate_column() calls instead of peeking into the guts of the object
+  my $is_inflated_column
+    = exists $class->column_info($self->name)->{_inflate_info};
+
+  ensure_all_roles($self,
+    $is_inflated_column
+      ? 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn::Inflated'
+      : 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn'
+  );
 };
 
 1;
