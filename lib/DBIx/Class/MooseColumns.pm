@@ -6,23 +6,19 @@ use Moose::Util::MetaRole;
 
 use DBIx::Class::MooseColumns::Meta::Role::Attribute;
 
-Moose::Exporter->setup_import_methods();
+my %metaroles = (
+  class_metaroles => {
+    attribute => ['DBIx::Class::MooseColumns::Meta::Role::Attribute'],
+  },
+);
 
-sub init_meta {
-  my ($class, %args) = (shift, @_);
-
-  Moose->init_meta(%args);
-
-  Moose::Util::MetaRole::apply_metaroles(
-    for             => $args{for_class},
-    class_metaroles => {
-      attribute => ['DBIx::Class::MooseColumns::Meta::Role::Attribute'],
-    },
-  );
-
-  return $args{for_class}->meta;
+if ( $Moose::VERSION >= 1.9900 ) {
+  $metaroles{role_metaroles} = {
+    applied_attribute => ['DBIx::Class::MooseColumns::Meta::Role::Attribute'],
+  };
 }
 
+Moose::Exporter->setup_import_methods(%metaroles);
 
 =head1 NAME
 
