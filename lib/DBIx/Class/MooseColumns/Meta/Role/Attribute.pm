@@ -50,8 +50,8 @@ before attach_to_class => sub {
 
   ensure_all_roles($self,
     $is_inflated_column
-      ? 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn::Inflated'
-      : 'DBIx::Class::MooseColumns::Meta::Role::Attribute::DBICColumn'
+      ? __PACKAGE__ . '::DBICColumn::Inflated'
+      : __PACKAGE__ . '::DBICColumn'
   );
 };
 
