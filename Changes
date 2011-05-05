@@ -1,5 +1,8 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.22    2011-05-06 01:28:00+0100
+	Workaround for silly CPAN indexer.
+
 0.21    2011-05-06 01:07:00+0100
         Made it work in roles (under Moose 2.x). (Attributes with 'add_column'
             option can be defined in roles and then the role can be applied to
