@@ -1,8 +1,14 @@
 Revision history for DBIx-Class-MooseColumns
 
+0.21    2011-05-06 01:07:00+0100
+        Made it work in roles (under Moose 2.x). (Attributes with 'add_column'
+            option can be defined in roles and then the role can be applied to
+            DBIC result classes.)
+        Make this module work with roles in Moose 1.9900+. (Dave Rolsky)
+
 0.20    2011-03-20 23:11:00+0100
-	Fixed a test failure with recent DBIx::Class. (TestSchema is not a
-	    MooseX::NonMoose class any more to make tests pass.)
+        Fixed a test failure with recent DBIx::Class. (TestSchema is not a
+            MooseX::NonMoose class any more to make tests pass.)
 
 0.19    2011-03-15 17:52:00+0100
         Moose 1.99+ compatibility (but still works with Moose 1.24).
